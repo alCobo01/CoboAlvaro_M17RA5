@@ -26,6 +26,7 @@ public class AnimationBehaviour : MonoBehaviour
 
     public void PlayDance()
     {
+        Debug.Log("Dance triggered");
         _animator.SetTrigger(_danceHash);
     }
 } 

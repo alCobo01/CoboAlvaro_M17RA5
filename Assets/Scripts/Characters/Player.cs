@@ -2,12 +2,23 @@ using static InputSystem_Actions;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Player : Character, IPlayerActions
+public class PlayerInput : Character, IPlayerActions
 {
-    [SerializeField] private float speed = 5f;
+    [Header("Camera settings")]
+    [SerializeField] private Transform cameraPivot;
+    [SerializeField] private float mouseSensitivity = 0.5f;
+    [SerializeField] private float minPitch = -10f;
+    [SerializeField] private float maxPitch = 10f;
+
+    [Header("Movement speed values")]
+    [SerializeField] private float walkSpeed = 5f;
+    [SerializeField] private float runSpeed = 7f;
 
     private InputSystem_Actions _inputActions;
     private Vector3 _moveInput;
+    private Vector2 _lookInput;
+    private float _currentSpeed, _yaw, _pitch;
+    private bool _isSprinting;
 
     private void Awake()
     {
@@ -16,6 +27,13 @@ public class Player : Character, IPlayerActions
 
         _inputActions = new InputSystem_Actions();
         _inputActions.Player.SetCallbacks(this);
+
+        _currentSpeed = walkSpeed;
+
+        Application.targetFrameRate = 60;
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     void Start() => _inputActions.Enable();
@@ -24,7 +42,18 @@ public class Player : Character, IPlayerActions
 
     private void FixedUpdate()
     {
-        _moveBehaviour.Move(_moveInput, speed);
+        _moveBehaviour.Move(_moveInput, _currentSpeed);
+    }
+
+    private void LateUpdate()
+    {
+        float yawDelta = _lookInput.x * mouseSensitivity;
+        transform.Rotate(Vector3.up * yawDelta);
+
+        _pitch -= _lookInput.y * mouseSensitivity;
+        _pitch = Mathf.Clamp(_pitch, minPitch, maxPitch);
+
+        cameraPivot.localRotation = Quaternion.Euler(_pitch, 0f, 0f);
     }
 
     public void OnAttack(InputAction.CallbackContext context)
@@ -47,6 +76,12 @@ public class Player : Character, IPlayerActions
 
     public void OnSprint(InputAction.CallbackContext context)
     {
-        
+        _isSprinting = context.ReadValueAsButton();
+        _currentSpeed = _isSprinting ? runSpeed : walkSpeed;
+    }
+
+    public void OnLook(InputAction.CallbackContext context)
+    {
+        _lookInput = context.ReadValue<Vector2>();
     }
 }
