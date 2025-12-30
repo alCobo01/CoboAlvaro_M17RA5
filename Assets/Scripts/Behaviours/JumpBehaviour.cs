@@ -18,7 +18,6 @@ public class JumpBehaviour : MonoBehaviour
     {
         Vector3 origin = feetPivot ? feetPivot.position : transform.position;
         IsGrounded = Physics.Raycast(origin, Vector3.down, groundCheckDist, groundLayer);
-        //IsGrounded = true;
     }
 
     public void Jump()

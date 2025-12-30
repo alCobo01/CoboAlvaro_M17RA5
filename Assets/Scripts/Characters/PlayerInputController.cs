@@ -8,6 +8,7 @@ public class PlayerInputController : MonoBehaviour, IPlayerActions
     public event UnityAction<Vector2> OnLookEvent = delegate { };
     public event UnityAction<Vector2> OnMoveEvent = delegate { };
     public event UnityAction<bool> OnSprintEvent = delegate { };
+    public event UnityAction<bool> OnCrouchEvent = delegate { };
     public event UnityAction OnJumpEvent = delegate { };
     public event UnityAction OnDanceEvent = delegate { };
     public event UnityAction OnAttackEvent = delegate { };
@@ -54,5 +55,11 @@ public class PlayerInputController : MonoBehaviour, IPlayerActions
     public void OnJump(InputAction.CallbackContext context)
     {
         if (context.performed) OnJumpEvent.Invoke();
+    }
+
+    public void OnCrouch(InputAction.CallbackContext context)
+    {
+        if (context.performed) OnCrouchEvent.Invoke(true);
+        if (context.canceled) OnCrouchEvent.Invoke(false);
     }
 }

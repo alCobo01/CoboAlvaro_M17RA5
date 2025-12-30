@@ -2,6 +2,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(PlayerInputController))]
 [RequireComponent(typeof(JumpBehaviour))]
+[RequireComponent(typeof(CrouchBehaviour))]
 public class PlayerMovementController : Character
 {
     [Header("Dependencies")]
@@ -12,11 +13,13 @@ public class PlayerMovementController : Character
     [SerializeField] private float walkSpeed = 5f;
     [SerializeField] private float runSpeed = 7f;
     [SerializeField] private float rotationSpeed = 10f;
+    [SerializeField] private float crouchSpeed = 2.5f;
 
     private JumpBehaviour _jumpBehaviour;
+    private CrouchBehaviour _crouchBehaviour;
     private Vector3 _moveInput;
     private float _currentSpeed;
-    private bool _isSprinting;
+    private bool _isSprinting, _wantsToCrouch;
 
     private void Awake()
     {
@@ -24,6 +27,7 @@ public class PlayerMovementController : Character
         animationBehaviour = GetComponent<AnimationBehaviour>();
         inputController = GetComponent<PlayerInputController>();
         _jumpBehaviour = GetComponent<JumpBehaviour>();
+        _crouchBehaviour = GetComponent<CrouchBehaviour>();
         _currentSpeed = walkSpeed;
 
         // Subscribe to input events
@@ -31,6 +35,7 @@ public class PlayerMovementController : Character
         inputController.OnSprintEvent += HandleSprint;
         inputController.OnDanceEvent += HandleDance;
         inputController.OnJumpEvent += HandleJump;
+        inputController.OnCrouchEvent += HandleCrouch;
     }
 
     private void Update()
@@ -75,7 +80,7 @@ public class PlayerMovementController : Character
     private void HandleSprint(bool isSprinting)
     {
         _isSprinting = isSprinting;
-        _currentSpeed = _isSprinting ? runSpeed : walkSpeed;
+        UpdateSpeed();
     }
 
     private void HandleDance() => animationBehaviour.PlayDance();
@@ -87,5 +92,23 @@ public class PlayerMovementController : Character
             _jumpBehaviour.Jump();
             animationBehaviour.TriggerJump();
         }
-    }  
+    }
+
+    private void HandleCrouch(bool isCrouching)
+    {
+        _wantsToCrouch = isCrouching;
+        _crouchBehaviour.ToggleCrouch(_wantsToCrouch);
+        animationBehaviour.SetCrouch(_wantsToCrouch);
+        UpdateSpeed();
+    }
+
+    private void UpdateSpeed()
+    {
+        if 
+            (_crouchBehaviour.IsCrouching) _currentSpeed = crouchSpeed;
+        else if 
+            (_isSprinting) _currentSpeed = runSpeed;
+        else
+            _currentSpeed = walkSpeed;
+    }
 }

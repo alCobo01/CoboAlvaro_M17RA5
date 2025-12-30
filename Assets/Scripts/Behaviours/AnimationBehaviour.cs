@@ -9,6 +9,7 @@ public class AnimationBehaviour : MonoBehaviour
     private static readonly int _jumpHash = Animator.StringToHash("Jump");
     private static readonly int _isGroundedHash = Animator.StringToHash("IsGrounded");
     private static readonly int _verticalSpeedHash = Animator.StringToHash("VerticalSpeed");
+    private static readonly int _isCrouchedHash = Animator.StringToHash("IsCrouched");
 
     private Animator _animator;
     private Rigidbody _rigidbody;
@@ -46,5 +47,10 @@ public class AnimationBehaviour : MonoBehaviour
     public void SetVerticalVelocity(float velocity)
     {
         _animator.SetFloat(_verticalSpeedHash, velocity);
+    }
+
+    public void SetCrouch(bool isCrouching)
+    {
+        _animator.SetBool(_isCrouchedHash, isCrouching);
     }
 } 
