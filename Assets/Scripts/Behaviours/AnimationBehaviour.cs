@@ -6,6 +6,9 @@ public class AnimationBehaviour : MonoBehaviour
 {
     private static readonly int _speedHash = Animator.StringToHash("Speed");
     private static readonly int _danceHash = Animator.StringToHash("Dance");
+    private static readonly int _jumpHash = Animator.StringToHash("Jump");
+    private static readonly int _isGroundedHash = Animator.StringToHash("IsGrounded");
+    private static readonly int _verticalSpeedHash = Animator.StringToHash("VerticalSpeed");
 
     private Animator _animator;
     private Rigidbody _rigidbody;
@@ -28,5 +31,20 @@ public class AnimationBehaviour : MonoBehaviour
     {
         Debug.Log("Dance triggered");
         _animator.SetTrigger(_danceHash);
+    }
+
+    public void TriggerJump()
+    {
+        _animator.SetTrigger(_jumpHash);
+    }
+
+    public void SetGrounded(bool isGrounded)
+    {
+        _animator.SetBool(_isGroundedHash, isGrounded);
+    }
+
+    public void SetVerticalVelocity(float velocity)
+    {
+        _animator.SetFloat(_verticalSpeedHash, velocity);
     }
 } 
