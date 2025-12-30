@@ -139,7 +139,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""Look"",
-                    ""type"": ""Value"",
+                    ""type"": ""PassThrough"",
                     ""id"": ""90cae2fc-38f7-4185-bd01-f24cffa63b91"",
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",

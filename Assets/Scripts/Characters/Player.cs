@@ -17,13 +17,13 @@ public class PlayerInput : Character, IPlayerActions
     private InputSystem_Actions _inputActions;
     private Vector3 _moveInput;
     private Vector2 _lookInput;
-    private float _currentSpeed, _yaw, _pitch;
+    private float _currentSpeed, _pitch;
     private bool _isSprinting;
 
     private void Awake()
     {
-        _moveBehaviour = GetComponent<MoveBehaviour>();
-        _animationBehaviour = GetComponent<AnimationBehaviour>();
+        moveBehaviour = GetComponent<MoveBehaviour>();
+        animationBehaviour = GetComponent<AnimationBehaviour>();
 
         _inputActions = new InputSystem_Actions();
         _inputActions.Player.SetCallbacks(this);
@@ -40,12 +40,7 @@ public class PlayerInput : Character, IPlayerActions
     void OnEnable() => _inputActions.Enable();
     void OnDisable() => _inputActions.Disable();
 
-    private void FixedUpdate()
-    {
-        _moveBehaviour.Move(_moveInput, _currentSpeed);
-    }
-
-    private void LateUpdate()
+    private void Update()
     {
         float yawDelta = _lookInput.x * mouseSensitivity;
         transform.Rotate(Vector3.up * yawDelta);
@@ -56,12 +51,14 @@ public class PlayerInput : Character, IPlayerActions
         cameraPivot.localRotation = Quaternion.Euler(_pitch, 0f, 0f);
     }
 
+    private void FixedUpdate() => moveBehaviour.Move(_moveInput, _currentSpeed);
+
     public void OnAttack(InputAction.CallbackContext context)
     {
         
     }
 
-    public void OnDance(InputAction.CallbackContext context) => _animationBehaviour.PlayDance();
+    public void OnDance(InputAction.CallbackContext context) => animationBehaviour.PlayDance();
 
     public void OnJump(InputAction.CallbackContext context)
     {

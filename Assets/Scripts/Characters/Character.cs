@@ -4,6 +4,6 @@ using UnityEngine;
 [RequireComponent(typeof(AnimationBehaviour))]
 public class Character : MonoBehaviour
 {
-    protected MoveBehaviour _moveBehaviour;
-    protected AnimationBehaviour _animationBehaviour;
+    protected MoveBehaviour moveBehaviour;
+    protected AnimationBehaviour animationBehaviour;
 }

@@ -274,7 +274,7 @@ MonoBehaviour:
   IgnoreTimeScale: 0
   WorldUpOverride: {fileID: 0}
   ChannelMask: -1
-  UpdateMethod: 0
+  UpdateMethod: 2
   BlendUpdateMethod: 1
   LensModeOverride:
     Enabled: 0
@@ -508,7 +508,7 @@ MonoBehaviour:
       LookAtTarget: {fileID: 0}
       CustomLookAtTarget: 0
   DefaultBlend:
-    Style: 1
+    Style: 6
     Time: 0.5
     CustomCurve:
       serializedVersion: 2
@@ -516,7 +516,7 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-  CustomBlends: {fileID: 0}
+  CustomBlends: {fileID: 11400000, guid: 910d6fd2cf1cba944818d5861f2f6b89, type: 2}
   AnimatedTarget: {fileID: 1425892829}
   LayerIndex: 0
   Instructions:
@@ -745,7 +745,7 @@ MonoBehaviour:
     BindingMode: 3
     PositionDamping: {x: 0, y: 0, z: 0}
     AngularDampingMode: 0
-    RotationDamping: {x: 1, y: 1, z: 1}
+    RotationDamping: {x: 0, y: 0, z: 0}
     QuaternionDamping: 1
   FollowOffset: {x: 0.51, y: 1.32, z: -1.61}
 --- !u!4 &1561766895
@@ -849,6 +849,12 @@ PrefabInstance:
       addedObject: {fileID: 1425892826}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e830a090efeb10645b814e840bd1ffa3, type: 3}
       insertIndex: -1
+      addedObject: {fileID: 1664631891}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e830a090efeb10645b814e840bd1ffa3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1664631890}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e830a090efeb10645b814e840bd1ffa3, type: 3}
+      insertIndex: -1
       addedObject: {fileID: 1664631889}
   m_SourcePrefab: {fileID: 100100000, guid: e830a090efeb10645b814e840bd1ffa3, type: 3}
 --- !u!4 &1664631888 stripped
@@ -865,15 +871,44 @@ MonoBehaviour:
   m_GameObject: {fileID: 1425892822}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 586e4a1e7effc4e40bdc0e70613fbb4a, type: 3}
+  m_Script: {fileID: 11500000, guid: 159912e4550f3b04295b7534b9045c45, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerInput
-  cameraPivot: {fileID: 2058521085}
-  mouseSensitivity: 0.5
-  minPitch: -10
-  maxPitch: 10
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerMovementController
+  inputController: {fileID: 1664631891}
+  cameraTransform: {fileID: 2058521085}
   walkSpeed: 5
   runSpeed: 7
+  rotationSpeed: 10
+--- !u!114 &1664631890
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1425892822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a92793859de3d5b4cb99c3ed7e6547fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerCameraController
+  inputController: {fileID: 1664631891}
+  cameraPivot: {fileID: 2058521085}
+  lookSensitivity: 0.5
+  smoothInputSpeed: 0.05
+  minPitch: -10
+  maxPitch: 10
+--- !u!114 &1664631891
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1425892822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bb2e8b991fd086488f8057eacbeb781, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerInputController
 --- !u!1 &2056502136
 GameObject:
   m_ObjectHideFlags: 0
@@ -915,7 +950,7 @@ MonoBehaviour:
   m_StreamingVersion: 20241001
   m_LegacyPriority: 0
   Target:
-    TrackingTarget: {fileID: 1664631888}
+    TrackingTarget: {fileID: 2058521085}
     LookAtTarget: {fileID: 0}
     CustomLookAtTarget: 0
   Lens:
@@ -1138,7 +1173,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2058521084}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1152,5 +1187,5 @@ SceneRoots:
   - {fileID: 330585546}
   - {fileID: 410087041}
   - {fileID: 832575519}
-  - {fileID: 1664631887}
   - {fileID: 1214761790}
+  - {fileID: 1664631887}
