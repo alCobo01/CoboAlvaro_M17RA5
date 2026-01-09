@@ -11,8 +11,8 @@ public class CombatModeManager : MonoBehaviour
     private AnimationBehaviour _animationBehaviour;
     
     // Dependencies on specific strategies
-    [SerializeField] private MeleeAttack _meleeAttack;
-    [SerializeField] private RangeAttack _rangeAttack;
+    [SerializeField] private MeleeAttack meleeAttack;
+    [SerializeField] private RangeAttack rangeAttack;
 
     private void Awake()
     {
@@ -20,39 +20,31 @@ public class CombatModeManager : MonoBehaviour
         _attackController = GetComponent<PlayerAttackController>();
         _animationBehaviour = GetComponent<AnimationBehaviour>();
         
-        // Auto-detect if not assigned (assumes they are on the same GameObject)
-        if (_meleeAttack == null) _meleeAttack = GetComponent<MeleeAttack>();
-        if (_rangeAttack == null) _rangeAttack = GetComponent<RangeAttack>();
+        if (meleeAttack == null) meleeAttack = GetComponent<MeleeAttack>();
+        if (rangeAttack == null) rangeAttack = GetComponent<RangeAttack>();
     }
 
     private void OnEnable()
     {
         _inputController.OnAimEvent += HandleAim;
         
-        // Initialize with default strategy (Melee)
-        // We do this in Start or OnEnable to ensure everything is initialized
-        if (_meleeAttack != null)
+        if (meleeAttack != null)
         {
-            _attackController.SetAttackStrategy(_meleeAttack);
+            _attackController.SetAttackStrategy(meleeAttack);
         }
-    }
-
-    private void OnDisable()
-    {
-        _inputController.OnAimEvent -= HandleAim;
     }
 
     private void HandleAim(bool isAiming)
     {
         _animationBehaviour.SetAiming(isAiming);
 
-        if (isAiming && _rangeAttack != null)
+        if (isAiming && rangeAttack != null)
         {
-            _attackController.SetAttackStrategy(_rangeAttack);
+            _attackController.SetAttackStrategy(rangeAttack);
         }
-        else if (!isAiming && _meleeAttack != null)
+        else if (!isAiming && meleeAttack != null)
         {
-            _attackController.SetAttackStrategy(_meleeAttack);
+            _attackController.SetAttackStrategy(meleeAttack);
         }
     }
 }

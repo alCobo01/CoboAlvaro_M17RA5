@@ -15,10 +15,10 @@ public class PlayerAttackController : MonoBehaviour
             // Subscribe to input events
             _inputController.OnAttackEvent += HandleAttack;
         }
-        
-        private void HandleAttack() => _currentAttack?.Attack();
 
-        public void SetAttackStrategy(IAttack newAttackStrategy)
+         private void HandleAttack() => _currentAttack?.Attack();
+
+         public void SetAttackStrategy(IAttack newAttackStrategy)
         {
             _currentAttack = newAttackStrategy;
         }

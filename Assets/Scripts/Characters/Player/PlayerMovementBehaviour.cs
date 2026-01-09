@@ -40,10 +40,7 @@ public class PlayerMovementController : Character
 
     private void Update()
     {
-        // Update animation grounded state and vertical velocity
         animationBehaviour.SetGrounded(_jumpBehaviour.IsGrounded);
-        animationBehaviour.SetVerticalVelocity(_jumpBehaviour.VerticalVelocity);
-
     }
 
     private void FixedUpdate() 

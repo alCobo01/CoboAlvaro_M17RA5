@@ -8,7 +8,6 @@ public class AnimationBehaviour : MonoBehaviour
     private static readonly int DanceHash = Animator.StringToHash("Dance");
     private static readonly int JumpHash = Animator.StringToHash("Jump");
     private static readonly int IsGroundedHash = Animator.StringToHash("IsGrounded");
-    private static readonly int VerticalSpeedHash = Animator.StringToHash("VerticalSpeed");
     private static readonly int IsCrouchedHash = Animator.StringToHash("IsCrouched");
     private static readonly int MeleeAttackHash = Animator.StringToHash("MeleeAttack");
     private static readonly int RangeAttackHash = Animator.StringToHash("RangeAttack");
@@ -33,7 +32,6 @@ public class AnimationBehaviour : MonoBehaviour
 
     public void PlayDance()
     {
-        Debug.Log("Dance triggered");
         _animator.SetTrigger(DanceHash);
     }
 
@@ -60,11 +58,6 @@ public class AnimationBehaviour : MonoBehaviour
     public void SetGrounded(bool isGrounded)
     {
         _animator.SetBool(IsGroundedHash, isGrounded);
-    }
-
-    public void SetVerticalVelocity(float velocity)
-    {
-        _animator.SetFloat(VerticalSpeedHash, velocity);
     }
 
     public void SetCrouch(bool isCrouching)

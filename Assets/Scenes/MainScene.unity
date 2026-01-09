@@ -206,8 +206,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.88767, y: 1.5, z: -0.23232996}
+  m_LocalRotation: {x: 0.2534013, y: -0.0000000012202312, z: 3.1964087e-10, w: 0.9673613}
+  m_LocalPosition: {x: 1.37767, y: 2.43, z: -2.62233}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -902,6 +902,18 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e830a090efeb10645b814e840bd1ffa3, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1664631894}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e830a090efeb10645b814e840bd1ffa3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1664631898}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e830a090efeb10645b814e840bd1ffa3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1664631897}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e830a090efeb10645b814e840bd1ffa3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1664631896}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e830a090efeb10645b814e840bd1ffa3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1664631899}
   m_SourcePrefab: {fileID: 100100000, guid: e830a090efeb10645b814e840bd1ffa3, type: 3}
 --- !u!4 &1664631888 stripped
 Transform:
@@ -1036,6 +1048,56 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1664631896
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1425892822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd5e81e8bfab47bbaf2738e252a15501, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerAttackController
+--- !u!114 &1664631897
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1425892822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f9b06194ed9e4ed397be36bafab2251, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RangeAttack
+--- !u!114 &1664631898
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1425892822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8358fb94bdc4a4b3a8caa3ded333d1b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MeleeAttack
+--- !u!114 &1664631899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1425892822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 435e44fa41b834a1e8db9d3be79d65a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CombatModeManager
+  meleeAttack: {fileID: 1664631898}
+  rangeAttack: {fileID: 1664631897}
 --- !u!1 &1797612140
 GameObject:
   m_ObjectHideFlags: 0
