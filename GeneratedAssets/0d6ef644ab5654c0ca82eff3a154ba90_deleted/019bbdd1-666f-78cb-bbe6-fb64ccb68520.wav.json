@@ -1,0 +1,13 @@
+{
+    "asset": "0d6ef644ab5654c0ca82eff3a154ba90",
+    "fileName": "019bbdd1-666f-78cb-bbe6-fb64ccb68520.wav",
+    "prompt": "epico",
+    "negativePrompt": "",
+    "model": "5de0686a-fb27-40e5-9df0-28ae810d70ca",
+    "modelName": "ElevenLabs Sound Effects V2",
+    "customSeed": -1,
+    "w3CTraceId": "34a9e1392a05750b28936b7e586943c2",
+    "duration": 10.0,
+    "autoTrim": false,
+    "hasReference": false
+}
