@@ -17,7 +17,8 @@ public class PlayerMovementController : Character
 
     private JumpBehaviour _jumpBehaviour;
     private CrouchBehaviour _crouchBehaviour;
-    private Vector3 _moveInput;
+    private Vector3 _moveInput; 
+    private Vector2 _rawInput;
     private float _currentSpeed;
     private bool _isSprinting, _wantsToCrouch;
 
@@ -45,6 +46,7 @@ public class PlayerMovementController : Character
 
     private void FixedUpdate() 
     {
+        CalculateMovement();
         RotatePlayer();
         moveBehaviour.Move(_moveInput, _currentSpeed);
     }
@@ -59,8 +61,14 @@ public class PlayerMovementController : Character
         }
     }
 
-    private void HandleMove(Vector2 input)
+    private void CalculateMovement()
     {
+        if (_rawInput.sqrMagnitude < 0.01f)
+        {
+            _moveInput = Vector3.zero;
+            return;
+        }
+
         Vector3 camForward = cameraTransform.forward;
         Vector3 camRight = cameraTransform.right;
 
@@ -69,9 +77,14 @@ public class PlayerMovementController : Character
         camRight.y = 0;
         camForward.Normalize();
         camRight.Normalize();
+        
+        // Relative movement based on camera orientation
+        _moveInput = (camForward * _rawInput.y) + (camRight * _rawInput.x);
+    }
 
-        // Create Camera-Relative Movement Vector
-        _moveInput = (camForward * input.y) + (camRight * input.x);
+    private void HandleMove(Vector2 input)
+    {
+        _rawInput = input;
     }
 
     private void HandleSprint(bool isSprinting)

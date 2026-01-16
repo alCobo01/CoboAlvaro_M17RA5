@@ -7,37 +7,47 @@ public class PlayerCameraController : MonoBehaviour
     [SerializeField] private PlayerInputController inputController;
     [SerializeField] private Transform cameraPivot;
 
-    [Header("Camera settings")]
-    [SerializeField] private float lookSensitivity = 0.5f;
-    [SerializeField] private float smoothInputSpeed = 0.05f;
-    [SerializeField] private float minPitch = -10f;
-    [SerializeField] private float maxPitch = 10f;
+    [Header("Camera Settings")]
+    [SerializeField] private float sensitivityX = 0.5f;
+    [SerializeField] private float sensitivityY = 0.5f;
+    [SerializeField] private float minPitch = -40f;
+    [SerializeField] private float maxPitch = 60f;
 
     private float _pitch, _yaw;
-    private Vector2 _currentLookInput;
-    private Vector2 _targetLookInput;
-    private Vector2 _smoothVelocity;
 
-    private void Awake() => inputController.OnLookEvent += HandleLook;
+    private void Awake()
+    {
+        if (!inputController) inputController = GetComponent<PlayerInputController>();
+        inputController.OnLookEvent += HandleLook;
 
-    private void HandleLook(Vector2 input) => _targetLookInput = input;
+        if (cameraPivot)
+        {
+            Vector3 currentRotation = cameraPivot.eulerAngles; // Use global eulerAngles
+            _yaw = currentRotation.y;
+            _pitch = currentRotation.x;
+            if (_pitch > 180) _pitch -= 360;
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (inputController) inputController.OnLookEvent -= HandleLook;
+    }
+
+    private void HandleLook(Vector2 input)
+    {
+        // Direct accumulation for immediate response (removes "floaty" feel)
+        _yaw += input.x * sensitivityX;
+        _pitch -= input.y * sensitivityY;
+
+        _pitch = Mathf.Clamp(_pitch, minPitch, maxPitch);
+    }
 
     private void LateUpdate() => RotateCamera();
 
     private void RotateCamera()
     {
-        _currentLookInput = Vector2.SmoothDamp(_currentLookInput, _targetLookInput, ref _smoothVelocity, smoothInputSpeed);
-
-        if (_currentLookInput.sqrMagnitude < 0.00001f) return;
-
-        // Horizontal Rotation (Yaw)
-        _yaw += _currentLookInput.x * lookSensitivity;
-
-        // Vertical Rotation (Pitch)
-        _pitch -= _currentLookInput.y * lookSensitivity;
-        _pitch = Mathf.Clamp(_pitch, minPitch, maxPitch);
-
-        cameraPivot.rotation = Quaternion.Euler(_pitch, _yaw, 0f);
-
+        if (!cameraPivot) return;
+        cameraPivot.rotation = Quaternion.Euler(_pitch, _yaw, 0f); // Use global rotation
     }
 }
