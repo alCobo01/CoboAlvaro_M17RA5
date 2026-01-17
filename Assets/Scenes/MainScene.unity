@@ -540,6 +540,16 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1664631888}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &647888833 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1852576806548013000, guid: e830a090efeb10645b814e840bd1ffa3, type: 3}
+  m_PrefabInstance: {fileID: 1664631887}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &647888834 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -1812909498023395591, guid: e830a090efeb10645b814e840bd1ffa3, type: 3}
+  m_PrefabInstance: {fileID: 1664631887}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -876,6 +886,68 @@ Animator:
   m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: e830a090efeb10645b814e840bd1ffa3, type: 3}
   m_PrefabInstance: {fileID: 1664631887}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1431655532
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1431655533}
+  m_Layer: 0
+  m_Name: SwordSocket
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1431655533
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1431655532}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.73802054, y: -0.2041986, z: -0.1494562, w: 0.6255329}
+  m_LocalPosition: {x: 0, y: -0.05, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 647888833}
+  m_LocalEulerAnglesHint: {x: -100.15, y: 11.41, z: -40.49}
+--- !u!1 &1559714362
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1559714363}
+  m_Layer: 0
+  m_Name: ShieldSocket
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1559714363
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1559714362}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.20062739, y: 0.64664465, z: -0.7134191, w: -0.1806449}
+  m_LocalPosition: {x: 0, y: 0, z: -0.15}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 647888834}
+  m_LocalEulerAnglesHint: {x: 95.65, y: 212.32, z: 1}
 --- !u!1 &1561766890
 GameObject:
   m_ObjectHideFlags: 0
@@ -1097,6 +1169,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: e830a090efeb10645b814e840bd1ffa3, type: 3}
       insertIndex: -1
       addedObject: {fileID: 634869425}
+    - targetCorrespondingSourceObject: {fileID: -1812909498023395591, guid: e830a090efeb10645b814e840bd1ffa3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1559714363}
+    - targetCorrespondingSourceObject: {fileID: 1852576806548013000, guid: e830a090efeb10645b814e840bd1ffa3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1431655533}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e830a090efeb10645b814e840bd1ffa3, type: 3}
       insertIndex: -1
@@ -1137,6 +1215,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e830a090efeb10645b814e840bd1ffa3, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1664631899}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e830a090efeb10645b814e840bd1ffa3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1664631900}
   m_SourcePrefab: {fileID: 100100000, guid: e830a090efeb10645b814e840bd1ffa3, type: 3}
 --- !u!4 &1664631888 stripped
 Transform:
@@ -1296,6 +1377,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CombatModeManager
   meleeAttack: {fileID: 1664631898}
   rangeAttack: {fileID: 1664631897}
+--- !u!114 &1664631900
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1425892822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a956927d0434b929f60ebfdadf98315, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EquipmentManager
+  slots:
+  - slotName: Shield
+    socketTransform: {fileID: 1559714363}
+  - slotName: Sword
+    socketTransform: {fileID: 1431655533}
 --- !u!1 &1797612140
 GameObject:
   m_ObjectHideFlags: 0

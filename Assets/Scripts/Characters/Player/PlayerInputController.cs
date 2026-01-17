@@ -70,4 +70,9 @@ public class PlayerInputController : MonoBehaviour, IPlayerActions
         if (context.performed) OnCrouchEvent.Invoke(true);
         if (context.canceled) OnCrouchEvent.Invoke(false);
     }
+
+    public void OnGrab(InputAction.CallbackContext context)
+    {
+        
+    }
 }
