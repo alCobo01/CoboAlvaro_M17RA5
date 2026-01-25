@@ -13,6 +13,7 @@ public class PlayerInputController : MonoBehaviour, IPlayerActions
     public event UnityAction OnJumpEvent = delegate { };
     public event UnityAction OnDanceEvent = delegate { };
     public event UnityAction OnAttackEvent = delegate { };
+    public event UnityAction OnInteractEvent = delegate { };
 
     private InputSystem_Actions _inputActions;
 
@@ -70,9 +71,9 @@ public class PlayerInputController : MonoBehaviour, IPlayerActions
         if (context.performed) OnCrouchEvent.Invoke(true);
         if (context.canceled) OnCrouchEvent.Invoke(false);
     }
-
-    public void OnGrab(InputAction.CallbackContext context)
+    
+    public void OnInteract(InputAction.CallbackContext context)
     {
-        
+        if (context.performed) OnInteractEvent.Invoke();   
     }
 }

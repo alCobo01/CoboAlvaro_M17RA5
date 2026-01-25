@@ -1,13 +1,13 @@
 using UnityEngine;
 
-public class WeaponEquippable : MonoBehaviour, IEquippable
+public class Equippable : MonoBehaviour, IEquippable
 {
-    public void Equip(Transform socket)
+    public virtual void Equip(Transform socket)
     {
         transform.SetParent(socket);
         transform.localPosition = Vector3.zero;
         transform.localRotation = Quaternion.identity;
     }
     
-    public void Unequip() => transform.SetParent(null);
+    public virtual void Unequip() => Destroy(gameObject);
 }

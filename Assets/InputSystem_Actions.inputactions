@@ -79,9 +79,9 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Grab",
+                    "name": "Interact",
                     "type": "Button",
-                    "id": "d05c77d2-8a63-4e01-81c1-bbe9818b02da",
+                    "id": "dbf97d6e-2f0e-493d-b72c-2a439e981766",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -399,12 +399,12 @@
                 },
                 {
                     "name": "",
-                    "id": "2446f2c6-67a2-4c36-8242-8e47f0b5b081",
-                    "path": "<Keyboard>/g",
+                    "id": "82638e51-ad16-4d0b-8a33-dcf44b11a0a0",
+                    "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Grab",
+                    "action": "Interact",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

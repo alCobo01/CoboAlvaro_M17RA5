@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Serialization;
 
 [RequireComponent(typeof(PlayerInputController))]
 [RequireComponent(typeof(PlayerAttackController))]
@@ -29,22 +28,22 @@ public class CombatModeManager : MonoBehaviour
         _inputController.OnAimEvent += HandleAim;
         
         if (meleeAttack != null)
-        {
             _attackController.SetAttackStrategy(meleeAttack);
-        }
+        
     }
 
     private void HandleAim(bool isAiming)
     {
         _animationBehaviour.SetAiming(isAiming);
 
-        if (isAiming && rangeAttack != null)
+        switch (isAiming)
         {
-            _attackController.SetAttackStrategy(rangeAttack);
-        }
-        else if (!isAiming && meleeAttack != null)
-        {
-            _attackController.SetAttackStrategy(meleeAttack);
+            case true when rangeAttack != null:
+                _attackController.SetAttackStrategy(rangeAttack);
+                break;
+            case false when meleeAttack != null:
+                _attackController.SetAttackStrategy(meleeAttack);
+                break;
         }
     }
 }

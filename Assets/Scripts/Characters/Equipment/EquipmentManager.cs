@@ -9,15 +9,22 @@ public class EquipmentManager : MonoBehaviour
     {
         EquipmentSlot slot = slots.Find(s => s.slotName == data.slotName);
 
-        if (slot.currentItem != null) slot.currentItem.Unequip();
+        slot.CurrentItem?.Unequip();
 
         var instance = Instantiate(data.prefab);
         var equippable = instance.GetComponent<IEquippable>();
 
-        if (equippable != null)
-        {
-            equippable.Equip(slot.socketTransform);
-            slot.currentItem = equippable;
-        }
+        if (equippable == null) return;
+        equippable.Equip(slot.socketTransform);
+        slot.CurrentItem = equippable;
+    }
+
+    public void Unequip(string slotName)
+    {
+        var slot = slots.Find(s => s.slotName == slotName);
+
+        if (slot?.CurrentItem == null) return;
+        slot.CurrentItem.Unequip();
+        slot.CurrentItem = null;
     }
 }
