@@ -5,7 +5,8 @@ using UnityEngine;
 public class PlayerInteractionController : MonoBehaviour
 {
     [Header("Interaction Settings")]
-    [SerializeField] private float interactionRange = 3f;
+    [SerializeField] private float interactionRange = 10f;
+    [SerializeField] private float sphereCastRadius = 0.5f;
     [SerializeField] private LayerMask interactionLayer = ~0;
     [SerializeField] private Transform rayOrigin;
 
@@ -23,7 +24,7 @@ public class PlayerInteractionController : MonoBehaviour
 
     private void Update()
     {
-        Debug.DrawRay(rayOrigin, Vector3.forward * interactionRange, Color.red);
+        Debug.DrawRay(rayOrigin.position, rayOrigin.forward * interactionRange, Color.red);
     }
 
     private void HandleInteraction()
@@ -35,12 +36,9 @@ public class PlayerInteractionController : MonoBehaviour
     
     private void DetectInteractable()
     {
-        var ray = new Ray(rayOrigin.position, rayOrigin.forward);
-
-        if (Physics.Raycast(ray, out RaycastHit hit, interactionRange, interactionLayer))
+        if (Physics.SphereCast(rayOrigin.position, sphereCastRadius, rayOrigin.forward, out RaycastHit hit, interactionRange, interactionLayer))
         {
             _currentInteractable = hit.collider.TryGetComponent(out IInteractable interactable) ? interactable : null;
         }
-            
     }
 }
