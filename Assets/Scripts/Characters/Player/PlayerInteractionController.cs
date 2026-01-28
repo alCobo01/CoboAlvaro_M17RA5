@@ -36,9 +36,32 @@ public class PlayerInteractionController : MonoBehaviour
     
     private void DetectInteractable()
     {
-        if (Physics.SphereCast(rayOrigin.position, sphereCastRadius, rayOrigin.forward, out RaycastHit hit, interactionRange, interactionLayer))
+        if (Physics.SphereCast(rayOrigin.position, sphereCastRadius, rayOrigin.forward, out var hit, interactionRange, interactionLayer))
         {
             _currentInteractable = hit.collider.TryGetComponent(out IInteractable interactable) ? interactable : null;
         }
     }
+    
+    // Debug SphereCast (ctrl-c ctrl-v)
+    // private void OnDrawGizmos()
+    // {
+    //     Gizmos.DrawWireSphere(transform.position, interactionRange);
+    //
+    //     RaycastHit hit;
+    //     if (Physics.SphereCast(transform.position, sphereCastRadius, transform.forward * interactionRange, out hit, interactionRange, interactionLayer))
+    //     {
+    //         Gizmos.color = Color.green;
+    //         Vector3 sphereCastMidpoint = transform.position + (transform.forward * hit.distance);
+    //         Gizmos.DrawWireSphere(sphereCastMidpoint, sphereCastRadius);
+    //         Gizmos.DrawSphere(hit.point, 0.1f);
+    //         Debug.DrawLine(transform.position, sphereCastMidpoint, Color.green);
+    //     }
+    //     else
+    //     {
+    //         Gizmos.color = Color.red;
+    //         Vector3 sphereCastMidpoint = transform.position + (transform.forward * (interactionRange-sphereCastRadius));
+    //         Gizmos.DrawWireSphere(sphereCastMidpoint, sphereCastRadius);
+    //         Debug.DrawLine(transform.position, sphereCastMidpoint, Color.red);
+    //     }
+    // }
 }

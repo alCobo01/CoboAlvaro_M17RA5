@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class EquipmentManager : MonoBehaviour
 {
-    public List<EquipmentSlot> slots = new List<EquipmentSlot>();
+    public List<EquipmentSlot> slots = new();
 
     public void EquipItem(ItemData data)
     {
