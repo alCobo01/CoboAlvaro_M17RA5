@@ -1,9 +1,14 @@
-using System;
+using TMPro;
 using UnityEngine;
 
 [RequireComponent(typeof(PlayerInputController))]
 public class PlayerInteractionController : MonoBehaviour
 {
+    [Header("UI Indicators")] 
+    [SerializeField] private GameObject uiObject;
+    [SerializeField] private TMP_Text uiText;
+    [SerializeField] private string baseText = "Press E to ";
+    
     [Header("Interaction Settings")]
     [SerializeField] private float interactionRange = 10f;
     [SerializeField] private float sphereCastRadius = 0.5f;
@@ -21,20 +26,32 @@ public class PlayerInteractionController : MonoBehaviour
         if (rayOrigin == null)
             if (Camera.main != null) rayOrigin = Camera.main.transform;
     }
-    
-    private void HandleInteraction()
+
+    private void Update()
     {
         DetectInteractable();
-        _currentInteractable?.Interact();
-        _currentInteractable = null;
+        UpdateUI();
     }
-    
+
+    private void UpdateUI()
+    {
+        if (_currentInteractable != null)
+        {
+            uiText.text = baseText + _currentInteractable.InteractionPrompt;
+            uiObject.gameObject.SetActive(true);
+        }
+        else uiObject.gameObject.SetActive(false);
+    }
+
+    private void HandleInteraction() => _currentInteractable?.Interact(gameObject);
+
     private void DetectInteractable()
     {
         if (Physics.SphereCast(rayOrigin.position, sphereCastRadius, rayOrigin.forward, out var hit, interactionRange, interactionLayer))
         {
             _currentInteractable = hit.collider.TryGetComponent(out IInteractable interactable) ? interactable : null;
         }
+        else _currentInteractable = null;
     }
     
     // Debug SphereCast (ctrl-c ctrl-v)

@@ -4,12 +4,13 @@ public class PickupItem : MonoBehaviour, IInteractable
 {
     [SerializeField] private ItemData itemData;
 
-    public void Interact()
+    public string InteractionPrompt => itemData != null ? $"pick up the {itemData.itemName}" : "pick up the item";
+
+    public void Interact(GameObject interactor)
     {
         if (itemData == null) return;
-        
-        var player = GameObject.FindGameObjectWithTag("Player");
-        if (player != null && player.TryGetComponent(out PlayerEquipmentController equipmentController))
+
+        if (interactor != null && interactor.TryGetComponent(out PlayerEquipmentController equipmentController))
         {
             equipmentController.Equip(itemData);
             Destroy(gameObject);

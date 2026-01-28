@@ -1,8 +1,9 @@
 using System.Collections;
 using UnityEngine;
 
-public class Door : MonoBehaviour
+public class Door : MonoBehaviour, IInteractable
 {
+    public string InteractionPrompt => IsOpen ? "close the door" : "open the door" ;
     public bool IsOpen { get; private set; }
 
     [Header("Rotation config")] 
@@ -83,5 +84,12 @@ public class Door : MonoBehaviour
             yield return null;
             time += Time.deltaTime * rotationSpeed;
         }
+    }
+
+
+    public void Interact(GameObject interactor)
+    {
+        if (IsOpen) Close();
+        else Open(interactor.transform.position);
     }
 }
