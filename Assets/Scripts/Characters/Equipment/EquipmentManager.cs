@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class EquipmentManager : MonoBehaviour
@@ -7,7 +8,7 @@ public class EquipmentManager : MonoBehaviour
 
     public void EquipItem(ItemData data)
     {
-        EquipmentSlot slot = slots.Find(s => s.slotName == data.slotName);
+        var slot = slots.Find(s => s.slotName == data.slotName);
 
         slot.CurrentItem?.Unequip();
 
@@ -17,6 +18,7 @@ public class EquipmentManager : MonoBehaviour
         if (equippable == null) return;
         equippable.Equip(slot.socketTransform);
         slot.CurrentItem = equippable;
+        slot.CurrentItemData = data;
     }
 
     public void Unequip(string slotName)
@@ -26,5 +28,11 @@ public class EquipmentManager : MonoBehaviour
         if (slot?.CurrentItem == null) return;
         slot.CurrentItem.Unequip();
         slot.CurrentItem = null;
+        slot.CurrentItemData = null;
+    }
+
+    public List<string> GetEquippedItemNames()
+    {
+        return (from slot in slots where slot.CurrentItemData != null select slot.CurrentItemData.itemName).ToList();
     }
 }
