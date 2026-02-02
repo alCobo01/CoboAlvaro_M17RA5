@@ -6,7 +6,7 @@ public class PlayerCameraController : MonoBehaviour
     [Header("Dependencies")]
     [SerializeField] private PlayerInputController inputController;
     [SerializeField] private Transform cameraPivot;
-
+    
     [Header("Camera Settings")]
     [SerializeField] private float sensitivityX = 0.5f;
     [SerializeField] private float sensitivityY = 0.5f;
@@ -19,14 +19,11 @@ public class PlayerCameraController : MonoBehaviour
     {
         if (!inputController) inputController = GetComponent<PlayerInputController>();
         inputController.OnLookEvent += HandleLook;
-
-        if (cameraPivot)
-        {
-            Vector3 currentRotation = cameraPivot.eulerAngles; // Use global eulerAngles
-            _yaw = currentRotation.y;
-            _pitch = currentRotation.x;
-            if (_pitch > 180) _pitch -= 360;
-        }
+        
+        var currentRotation = cameraPivot.eulerAngles;
+        _yaw = currentRotation.y;
+        _pitch = currentRotation.x;
+        if (_pitch > 180) _pitch -= 360;
     }
 
     private void OnDestroy()
@@ -36,18 +33,19 @@ public class PlayerCameraController : MonoBehaviour
 
     private void HandleLook(Vector2 input)
     {
-        // Direct accumulation for immediate response (removes "floaty" feel)
         _yaw += input.x * sensitivityX;
         _pitch -= input.y * sensitivityY;
 
         _pitch = Mathf.Clamp(_pitch, minPitch, maxPitch);
     }
 
-    private void LateUpdate() => RotateCamera();
+    private void LateUpdate() => RotateAndMoveCamera();
 
-    private void RotateCamera()
+    private void RotateAndMoveCamera()
     {
-        if (!cameraPivot) return;
-        cameraPivot.rotation = Quaternion.Euler(_pitch, _yaw, 0f); // Use global rotation
+        // Rotate the camera pivot. 
+        // Cinemachine should be configured to follow/look at this pivot or be a child of it.
+        var lookRotation = Quaternion.Euler(_pitch, _yaw, 0f);
+        cameraPivot.rotation = lookRotation;
     }
 }

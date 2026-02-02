@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Door : MonoBehaviour, IInteractable
 {
-    public string InteractionPrompt => IsOpen ? closePrompt : openPrompt ;
+    public string InteractionPrompt => IsOpen ? "close the door" : "open the door" ;
     public bool IsOpen { get; private set; }
 
     [Header("Rotation config")] 
@@ -11,10 +11,6 @@ public class Door : MonoBehaviour, IInteractable
     [SerializeField] private float forwardDirection = 0f;
     [SerializeField] private float rotationDuration = 1f;
     [SerializeField] private float rotationSpeed = 1f;
-
-    [Header("Interaction settings")] 
-    [SerializeField] private string openPrompt;
-    [SerializeField] private string closePrompt;
 
     private Vector3 _startRotation, _forward;
     private Coroutine _animationCoroutine;

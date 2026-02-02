@@ -12,7 +12,7 @@ public class PlayerInteractionController : MonoBehaviour
     
     [Header("Interaction Settings")]
     [SerializeField] private float interactionRange = 10f;
-    [SerializeField] private float sphereCastRadius = 0.5f;
+    [SerializeField] private float sphereCastRadius = 5f;
     [SerializeField] private LayerMask interactionLayer = ~0;
     [SerializeField] private Transform rayOrigin;
 
@@ -48,7 +48,10 @@ public class PlayerInteractionController : MonoBehaviour
 
     private void DetectInteractable()
     {
-        if (Physics.SphereCast(rayOrigin.position, sphereCastRadius, rayOrigin.forward, out var hit, interactionRange, interactionLayer))
+        var offsetOrigin = rayOrigin.position - (rayOrigin.forward * sphereCastRadius);
+        var adjustedRange = interactionRange * sphereCastRadius;
+        
+        if (Physics.SphereCast(offsetOrigin, sphereCastRadius, rayOrigin.forward, out var hit, adjustedRange, interactionLayer))
         {
             Debug.Log(hit.collider.name);
             _currentInteractable = hit.collider.TryGetComponent(out IInteractable interactable) ? interactable : null;
@@ -58,24 +61,24 @@ public class PlayerInteractionController : MonoBehaviour
     }
     
     // Debug SphereCast (ctrl-c ctrl-v)
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawWireSphere(transform.position, interactionRange);
-
-        if (Physics.SphereCast(transform.position, sphereCastRadius, transform.forward * interactionRange, out var hit, interactionRange, interactionLayer))
-        {
-            Gizmos.color = Color.green;
-            Vector3 sphereCastMidpoint = transform.position + (transform.forward * hit.distance);
-            Gizmos.DrawWireSphere(sphereCastMidpoint, sphereCastRadius);
-            Gizmos.DrawSphere(hit.point, 0.1f);
-            Debug.DrawLine(transform.position, sphereCastMidpoint, Color.green);
-        }
-        else
-        {
-            Gizmos.color = Color.red;
-            Vector3 sphereCastMidpoint = transform.position + (transform.forward * (interactionRange-sphereCastRadius));
-            Gizmos.DrawWireSphere(sphereCastMidpoint, sphereCastRadius);
-            Debug.DrawLine(transform.position, sphereCastMidpoint, Color.red);
-        }
-    }
+    // private void OnDrawGizmos()
+    // {
+    //     Gizmos.DrawWireSphere(transform.position, interactionRange);
+    //
+    //     if (Physics.SphereCast(transform.position, sphereCastRadius, transform.forward * interactionRange, out var hit, interactionRange, interactionLayer))
+    //     {
+    //         Gizmos.color = Color.green;
+    //         Vector3 sphereCastMidpoint = transform.position + (transform.forward * hit.distance);
+    //         Gizmos.DrawWireSphere(sphereCastMidpoint, sphereCastRadius);
+    //         Gizmos.DrawSphere(hit.point, 0.1f);
+    //         Debug.DrawLine(transform.position, sphereCastMidpoint, Color.green);
+    //     }
+    //     else
+    //     {
+    //         Gizmos.color = Color.red;
+    //         Vector3 sphereCastMidpoint = transform.position + (transform.forward * (interactionRange-sphereCastRadius));
+    //         Gizmos.DrawWireSphere(sphereCastMidpoint, sphereCastRadius);
+    //         Debug.DrawLine(transform.position, sphereCastMidpoint, Color.red);
+    //     }
+    // }
 }
