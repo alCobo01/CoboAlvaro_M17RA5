@@ -43,8 +43,6 @@ public class PlayerCameraController : MonoBehaviour
 
     private void RotateAndMoveCamera()
     {
-        // Rotate the camera pivot. 
-        // Cinemachine should be configured to follow/look at this pivot or be a child of it.
         var lookRotation = Quaternion.Euler(_pitch, _yaw, 0f);
         cameraPivot.rotation = lookRotation;
     }

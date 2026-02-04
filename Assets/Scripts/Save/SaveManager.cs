@@ -24,19 +24,21 @@ public class SaveManager : MonoBehaviour
         var saveData = new SaveData()
         {
             playerPosition = characterToSave.transform.position,
+            playerRotation = characterToSave.transform.rotation,
             equippedItemNames = equipmentManager != null ? equipmentManager.GetEquippedItemNames() : new List<string>()
         };
 
         var json = JsonUtility.ToJson(saveData, true);
         File.WriteAllText(_saveLocation, json);
     }
-
+    
     public void LoadGame()
     {
         if (File.Exists(_saveLocation))
         {
             var saveData = JsonUtility.FromJson<SaveData>(File.ReadAllText(_saveLocation));
             characterToSave.transform.position = saveData.playerPosition;
+            characterToSave.transform.rotation = saveData.playerRotation;
 
             var equipmentManager = characterToSave.GetComponent<EquipmentManager>();
             foreach (var itemName in saveData.equippedItemNames)
@@ -44,7 +46,6 @@ public class SaveManager : MonoBehaviour
                 var item = allItems.Find(i => i.itemName == itemName);
                 if (item != null)
                     equipmentManager.EquipItem(item);
-
             }
         }
     }

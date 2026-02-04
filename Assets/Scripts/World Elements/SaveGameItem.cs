@@ -8,10 +8,5 @@ public class Campfire : MonoBehaviour, IInteractable
 
     public string InteractionPrompt => prompt;
 
-    public void Interact(GameObject interactor)
-    {
-        Debug.Log("Hola campfire");
-        onInteracted?.Invoke();
-    }
-
+    public void Interact(GameObject interactor) => onInteracted?.Invoke();
 }
