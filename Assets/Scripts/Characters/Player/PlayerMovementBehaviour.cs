@@ -39,10 +39,8 @@ public class PlayerMovementController : Character
         inputController.OnCrouchEvent += HandleCrouch;
     }
 
-    private void Update()
-    {
-        animationBehaviour.SetGrounded(_jumpBehaviour.IsGrounded);
-    }
+    private void Update() => animationBehaviour.SetGrounded(_jumpBehaviour.IsGrounded);
+    
 
     private void FixedUpdate() 
     {
@@ -69,8 +67,8 @@ public class PlayerMovementController : Character
             return;
         }
 
-        Vector3 camForward = cameraTransform.forward;
-        Vector3 camRight = cameraTransform.right;
+        var camForward = cameraTransform.forward;
+        var camRight = cameraTransform.right;
 
         // Flatten Y (to not walk into the ground/sky)
         camForward.y = 0;
@@ -82,10 +80,8 @@ public class PlayerMovementController : Character
         _moveInput = (camForward * _rawInput.y) + (camRight * _rawInput.x);
     }
 
-    private void HandleMove(Vector2 input)
-    {
-        _rawInput = input;
-    }
+    private void HandleMove(Vector2 input) => _rawInput = input;
+    
 
     private void HandleSprint(bool isSprinting)
     {
