@@ -23,17 +23,15 @@ public class Door : MonoBehaviour, IInteractable
     }
     
     //Open door method and coroutine
-    public void Open(Vector3 userPosition)
+    private void Open(Vector3 userPosition)
     {
-        if (!IsOpen)
-        {
-            if (_animationCoroutine != null)
-                StopCoroutine(_animationCoroutine);
+        if (IsOpen) return;
+        if (_animationCoroutine != null)
+            StopCoroutine(_animationCoroutine);
 
-            //Calculate if player is in front or behind the door
-            var dot = Vector3.Dot(_forward, (userPosition - transform.position).normalized);
-            _animationCoroutine = StartCoroutine(DoRotationOpen(dot));
-        }
+        //Calculate if player is in front or behind the door
+        var dot = Vector3.Dot(_forward, (userPosition - transform.position).normalized);
+        _animationCoroutine = StartCoroutine(DoRotationOpen(dot));
     }
     
     private IEnumerator DoRotationOpen(float forwardAmount)
@@ -59,7 +57,7 @@ public class Door : MonoBehaviour, IInteractable
     }
     
     //Close door method and coroutine
-    public void Close()
+    private void Close()
     {
         if (IsOpen)
         {
@@ -85,11 +83,25 @@ public class Door : MonoBehaviour, IInteractable
             time += Time.deltaTime * rotationSpeed;
         }
     }
-
-
+    
     public void Interact(GameObject interactor)
     {
-        if (IsOpen) Close();
-        else Open(interactor.transform.position);
+        if (IsOpen)
+        {
+            Close();
+            return;
+        }
+
+        if (!interactor.TryGetComponent<EquipmentManager>(out var equipmentManager)) return;
+        var equippedItems = equipmentManager.GetEquippedItemNames();
+        
+        if (equippedItems.Contains("Key")) Open(interactor.transform.position);
+        else
+        {
+            if (interactor.TryGetComponent<PlayerInteractionController>(out var interactionController))
+            {
+                interactionController.ShowTemporaryMessage("You need a key to open this door!", 2f);
+            }
+        }
     }
 }

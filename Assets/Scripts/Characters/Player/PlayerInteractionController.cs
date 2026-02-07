@@ -17,6 +17,9 @@ public class PlayerInteractionController : MonoBehaviour
 
     private IInteractable _currentInteractable;
     private PlayerInputController _inputController;
+    
+    private float _messageTimer;
+    private string _temporaryMessage;
 
     private void Awake()
     {
@@ -32,12 +35,27 @@ public class PlayerInteractionController : MonoBehaviour
 
     private void UpdateUI()
     {
+        if (_messageTimer > 0)
+        { 
+            _messageTimer -= Time.deltaTime;
+            uiText.text = _temporaryMessage;
+            uiObject.gameObject.SetActive(true);
+            return;
+        }
+
         if (_currentInteractable != null)
         {
             uiText.text = baseText + _currentInteractable.InteractionPrompt;
             uiObject.gameObject.SetActive(true);
         }
         else uiObject.gameObject.SetActive(false);
+    }
+    
+    public void ShowTemporaryMessage(string message, float duration)
+    {
+        _temporaryMessage = message;
+        _messageTimer = duration;
+        uiObject.gameObject.SetActive(true);
     }
 
     private void HandleInteraction() => _currentInteractable?.Interact(gameObject);

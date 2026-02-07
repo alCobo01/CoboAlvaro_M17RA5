@@ -18,7 +18,7 @@ public class EquipmentManager : MonoBehaviour
         if (equippable == null) return;
         equippable.Equip(slot.socketTransform);
         slot.CurrentItem = equippable;
-        slot.CurrentItemData = data;
+        slot.currentItemData = data;
     }
 
     public void Unequip(string slotName)
@@ -28,11 +28,11 @@ public class EquipmentManager : MonoBehaviour
         if (slot?.CurrentItem == null) return;
         slot.CurrentItem.Unequip();
         slot.CurrentItem = null;
-        slot.CurrentItemData = null;
+        slot.currentItemData = null;
     }
 
     public List<string> GetEquippedItemNames()
     {
-        return (from slot in slots where slot.CurrentItemData != null select slot.CurrentItemData.itemName).ToList();
+        return (from slot in slots where slot.currentItemData != null select slot.currentItemData.itemName).ToList();
     }
 }

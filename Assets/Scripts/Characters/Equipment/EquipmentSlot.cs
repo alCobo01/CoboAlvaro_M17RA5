@@ -6,5 +6,5 @@ public class EquipmentSlot
     public string slotName;
     public Transform socketTransform;
     public IEquippable CurrentItem;
-    public ItemData CurrentItemData;
+    public ItemData currentItemData;
 }
