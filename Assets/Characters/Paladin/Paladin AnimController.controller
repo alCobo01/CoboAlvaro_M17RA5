@@ -721,7 +721,7 @@ AnimatorStateTransition:
     m_ConditionEvent: IsAiming
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
-  m_DstState: {fileID: -8643627205118879751}
+  m_DstState: {fileID: -4331232292409257847}
   m_Solo: 0
   m_Mute: 0
   m_IsExit: 0
