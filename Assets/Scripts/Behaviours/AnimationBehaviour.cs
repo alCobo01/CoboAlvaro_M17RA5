@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
-[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(CharacterController))]
 public class AnimationBehaviour : MonoBehaviour
 {
     private static readonly int SpeedHash = Animator.StringToHash("Speed");
@@ -14,20 +14,17 @@ public class AnimationBehaviour : MonoBehaviour
     private static readonly int IsAimingHash = Animator.StringToHash("IsAiming");
 
     private Animator _animator;
-    private Rigidbody _rigidbody;
+    private MoveBehaviour _moveBehaviour;
 
     private void Awake()
     {
         _animator = GetComponent<Animator>();
-        _rigidbody = GetComponent<Rigidbody>();
+        _moveBehaviour = GetComponent<MoveBehaviour>();
     }
 
     private void Update()
     {
-        Vector3 velocity = _rigidbody.linearVelocity;
-        Vector3 horizontalVelocity = new Vector3(velocity.x, 0, velocity.z);
-        float currentSpeed = horizontalVelocity.magnitude;
-        _animator.SetFloat(SpeedHash, currentSpeed, 0.1f, Time.deltaTime);
+        _animator.SetFloat(SpeedHash, _moveBehaviour.Speed, 0.1f, Time.deltaTime);
     }
 
     public void PlayDance()

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Collider))]
+[RequireComponent(typeof(CharacterController))]
 public class CrouchBehaviour : MonoBehaviour
 {
     [SerializeField] private float crouchHeight = 1f;
@@ -8,15 +8,15 @@ public class CrouchBehaviour : MonoBehaviour
 
     private float _originalHeight;
     private Vector3 _originalCenter;
-    private CapsuleCollider _collider;
+    private CharacterController _controller;
 
     public bool IsCrouching { get; private set; }
 
     private void Awake()
     {
-        _collider = GetComponent<CapsuleCollider>();
-        _originalHeight = _collider.height;
-        _originalCenter = _collider.center;
+        _controller = GetComponent<CharacterController>();
+        _originalHeight = _controller.height;
+        _originalCenter = _controller.center;
     }
 
     public void ToggleCrouch(bool shouldCrouch)
@@ -25,13 +25,13 @@ public class CrouchBehaviour : MonoBehaviour
 
         if (shouldCrouch)
         {
-            _collider.height = crouchHeight;
-            _collider.center = crouchCenter;
+            _controller.height = crouchHeight;
+            _controller.center = crouchCenter;
         }
         else
         {
-            _collider.height = _originalHeight;
-            _collider.center = _originalCenter;
+            _controller.height = _originalHeight;
+            _controller.center = _originalCenter;
         }
     }
 }

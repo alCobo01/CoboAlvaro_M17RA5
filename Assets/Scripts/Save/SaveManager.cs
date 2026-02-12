@@ -5,48 +5,56 @@ using UnityEngine;
 public class SaveManager : MonoBehaviour
 {
     [Header("Save settings")]
-    [SerializeField] private GameObject characterToSave;
     [SerializeField] private string saveFileName = "saveData.json";
     [SerializeField] private List<ItemData> allItems;
     
     public static SaveManager Instance { get; private set; }
+    public SaveData CurrentSaveData { get; private set; }
+    public bool ShouldLoadSave { get; set; }
+    
     private string _saveLocation;
 
     private void Awake()
     {
         Instance = this;
+        DontDestroyOnLoad(gameObject);
         _saveLocation = Path.Combine(Application.persistentDataPath, saveFileName);
     }
 
-    public void SaveGame()
+    public bool HasSaveData()
     {
-        var equipmentManager = characterToSave.GetComponent<EquipmentManager>();
-        var saveData = new SaveData()
-        {
-            playerPosition = characterToSave.transform.position,
-            playerRotation = characterToSave.transform.rotation,
-            equippedItemNames = equipmentManager != null ? equipmentManager.GetEquippedItemNames() : new List<string>()
-        };
+        return File.Exists(_saveLocation);
+    }
 
+    public void SaveGame(SaveData saveData)
+    {
         var json = JsonUtility.ToJson(saveData, true);
         File.WriteAllText(_saveLocation, json);
     }
     
-    public void LoadGame()
+    public void LoadGameFromDisk()
     {
         if (File.Exists(_saveLocation))
         {
-            var saveData = JsonUtility.FromJson<SaveData>(File.ReadAllText(_saveLocation));
-            characterToSave.transform.position = saveData.playerPosition;
-            characterToSave.transform.rotation = saveData.playerRotation;
-
-            var equipmentManager = characterToSave.GetComponent<EquipmentManager>();
-            foreach (var itemName in saveData.equippedItemNames)
-            {
-                var item = allItems.Find(i => i.itemName == itemName);
-                if (item != null)
-                    equipmentManager.EquipItem(item);
-            }
+            CurrentSaveData = JsonUtility.FromJson<SaveData>(File.ReadAllText(_saveLocation));
         }
+    }
+
+    public ItemData GetItemByName(string itemName)
+    {
+        return allItems.Find(i => i.itemName == itemName);
+    }
+
+    public bool TryGetLoadedPlayerPosition(out Vector3 position)
+    {
+        if (ShouldLoadSave && CurrentSaveData != null)
+        {
+            position = CurrentSaveData.playerPosition;
+            ShouldLoadSave = false;
+            return true;
+        }
+
+        position = default;
+        return false;
     }
 }

@@ -37,25 +37,30 @@ public class PlayerMovementController : Character
         inputController.OnDanceEvent += HandleDance;
         inputController.OnJumpEvent += HandleJump;
         inputController.OnCrouchEvent += HandleCrouch;
+
+        // if (SaveManager.Instance.TryGetLoadedPlayerPosition(out var position))
+        // {
+        //     moveBehaviour.Controller.enabled = false;
+        //     transform.position = position;
+        //     moveBehaviour.Controller.enabled = true;
+        // }
     }
 
-    private void Update() => animationBehaviour.SetGrounded(_jumpBehaviour.IsGrounded);
-    
-
-    private void FixedUpdate() 
+    private void Update() 
     {
+        animationBehaviour.SetGrounded(_jumpBehaviour.IsGrounded);
         CalculateMovement();
         RotatePlayer();
         moveBehaviour.Move(_moveInput, _currentSpeed);
+        moveBehaviour.ApplyGravity(_jumpBehaviour.VerticalVelocity);
     }
 
     private void RotatePlayer()
     {
-        // Only rotate if we are actually moving
         if (_moveInput.sqrMagnitude > 0.001f)
         {
-            Quaternion targetRotation = Quaternion.LookRotation(_moveInput);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime);
+            var targetRotation = Quaternion.LookRotation(_moveInput);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         }
     }
 

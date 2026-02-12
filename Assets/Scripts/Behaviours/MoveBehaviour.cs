@@ -1,17 +1,25 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(CharacterController))]
 public class MoveBehaviour : MonoBehaviour
 {
-    private Rigidbody _rigidbody;
-
-    private void Awake() => _rigidbody = GetComponent<Rigidbody>();
+    public CharacterController Controller { get; set; }
+    public float Speed { get; private set; }
+    
+    private Vector3 _velocity;
+    
+    private void Awake() => Controller = GetComponent<CharacterController>();
 
     public void Move(Vector3 direction, float speed)
     {
-        var targetVelocity = direction.normalized * speed;
-        targetVelocity.y = _rigidbody.linearVelocity.y;
+        var move = direction.normalized * (speed * Time.deltaTime);
+        Controller.Move(move);
+        Speed = new Vector3(Controller.velocity.x, 0, Controller.velocity.z).magnitude;
+    }
 
-        _rigidbody.linearVelocity = targetVelocity;
+    public void ApplyGravity(float verticalVelocity)
+    {
+        _velocity.y = verticalVelocity;
+        Controller.Move(_velocity * Time.deltaTime);
     }
 }

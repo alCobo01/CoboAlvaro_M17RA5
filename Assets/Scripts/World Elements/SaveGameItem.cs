@@ -8,5 +8,9 @@ public class Campfire : MonoBehaviour, IInteractable
 
     public string InteractionPrompt => prompt;
 
-    public void Interact(GameObject interactor) => onInteracted?.Invoke();
+    public void Interact(GameObject interactor)
+    {
+        GameManager.Instance.SavePlayerProgress();
+        onInteracted?.Invoke();
+    }
 }
