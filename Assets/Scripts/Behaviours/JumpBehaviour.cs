@@ -14,15 +14,14 @@ public class JumpBehaviour : MonoBehaviour
 
     private void Update()
     {
-        Vector3 origin = feetPivot ? feetPivot.position : transform.position;
-        IsGrounded = Physics.CheckSphere(origin, groundCheckDist, groundLayer);
-
+        var origin = feetPivot ? feetPivot.position : transform.position;
+        IsGrounded = Physics.Raycast(origin, Vector3.down, groundCheckDist);
+        
         if (IsGrounded && _verticalVelocity < 0)
         {
-            _verticalVelocity = -2f; // Small constant to stay stuck to ground
+            _verticalVelocity = -2f;
         }
-
-        // Apply gravity
+        
         _verticalVelocity += gravity * Time.deltaTime;
     }
 
