@@ -12,6 +12,7 @@ public class AnimationBehaviour : MonoBehaviour
     private static readonly int MeleeAttackHash = Animator.StringToHash("MeleeAttack");
     private static readonly int RangeAttackHash = Animator.StringToHash("RangeAttack");
     private static readonly int IsAimingHash = Animator.StringToHash("IsAiming");
+    private static readonly int TalkHash = Animator.StringToHash("Talk");
 
     private Animator _animator;
     private MoveBehaviour _moveBehaviour;
@@ -50,6 +51,11 @@ public class AnimationBehaviour : MonoBehaviour
     public void TriggerJump()
     {
         _animator.SetTrigger(JumpHash);
+    }
+
+    public void TriggerTalk()
+    {
+        _animator.SetTrigger(TalkHash);
     }
 
     public void SetGrounded(bool isGrounded)

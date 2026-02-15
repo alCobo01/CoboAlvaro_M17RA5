@@ -13,6 +13,7 @@ public class PlayerCameraController : MonoBehaviour
     [SerializeField] private float minPitch = -40f;
     [SerializeField] private float maxPitch = 60f;
 
+    public bool canRotate = true;
     private float _pitch, _yaw;
 
     private void Awake()
@@ -33,6 +34,8 @@ public class PlayerCameraController : MonoBehaviour
 
     private void HandleLook(Vector2 input)
     {
+        if (!canRotate) return;
+        
         _yaw += input.x * sensitivityX;
         _pitch -= input.y * sensitivityY;
 

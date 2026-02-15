@@ -21,6 +21,7 @@ public class PlayerMovementController : Character
     private Vector2 _rawInput;
     private float _currentSpeed;
     private bool _isSprinting, _wantsToCrouch;
+    private bool _isMovementLocked;
 
     private void Awake()
     {
@@ -37,22 +38,38 @@ public class PlayerMovementController : Character
         inputController.OnDanceEvent += HandleDance;
         inputController.OnJumpEvent += HandleJump;
         inputController.OnCrouchEvent += HandleCrouch;
-
-        // if (SaveManager.Instance.TryGetLoadedPlayerPosition(out var position))
-        // {
-        //     moveBehaviour.Controller.enabled = false;
-        //     transform.position = position;
-        //     moveBehaviour.Controller.enabled = true;
-        // }
     }
 
     private void Update() 
     {
         animationBehaviour.SetGrounded(_jumpBehaviour.IsGrounded);
+
+        if (_isMovementLocked)
+        {
+            moveBehaviour.Move(Vector3.zero, 0f);
+            moveBehaviour.ApplyGravity(_jumpBehaviour.VerticalVelocity);
+            return;
+        }
+
         CalculateMovement();
         RotatePlayer();
         moveBehaviour.Move(_moveInput, _currentSpeed);
         moveBehaviour.ApplyGravity(_jumpBehaviour.VerticalVelocity);
+    }
+
+    public void SetMovementLocked(bool isLocked)
+    {
+        _isMovementLocked = isLocked;
+
+        if (!isLocked) return;
+
+        _rawInput = Vector2.zero;
+        _moveInput = Vector3.zero;
+        _isSprinting = false;
+        _wantsToCrouch = false;
+        _crouchBehaviour.ToggleCrouch(false);
+        animationBehaviour.SetCrouch(false);
+        UpdateSpeed();
     }
 
     private void RotatePlayer()

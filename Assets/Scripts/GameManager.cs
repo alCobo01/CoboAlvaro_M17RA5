@@ -44,19 +44,11 @@ public class GameManager : MonoBehaviour
     private void ApplySaveData(SaveData data)
     {
         var controller = player.GetComponent<CharacterController>();
-        if (controller != null)
-        {
-            controller.enabled = false; // Disable to allow manual transform update
-            player.transform.position = data.playerPosition;
-            player.transform.rotation = data.playerRotation;
-            controller.enabled = true; // Re-enable
-        }
-        else
-        {
-            player.transform.position = data.playerPosition;
-            player.transform.rotation = data.playerRotation;
-        }
-
+        controller.enabled = false;
+        player.transform.position = data.playerPosition;
+        player.transform.rotation = data.playerRotation;
+        controller.enabled = true;
+        
         var equipmentManager = player.GetComponent<EquipmentManager>();
         foreach (var itemName in data.equippedItemNames)
         {

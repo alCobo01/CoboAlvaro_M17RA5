@@ -7,6 +7,7 @@ public class CombatModeManager : MonoBehaviour
 {
     private PlayerInputController _inputController;
     private PlayerAttackController _attackController;
+    private PlayerCameraController _cameraController;
     private AnimationBehaviour _animationBehaviour;
     
     // Dependencies on specific strategies
@@ -17,6 +18,7 @@ public class CombatModeManager : MonoBehaviour
     {
         _inputController = GetComponent<PlayerInputController>();
         _attackController = GetComponent<PlayerAttackController>();
+        _cameraController = GetComponent<PlayerCameraController>();
         _animationBehaviour = GetComponent<AnimationBehaviour>();
         
         if (meleeAttack == null) meleeAttack = GetComponent<MeleeAttack>();
@@ -29,20 +31,25 @@ public class CombatModeManager : MonoBehaviour
         
         if (meleeAttack != null)
             _attackController.SetAttackStrategy(meleeAttack);
-        
+    }
+    
+    private void OnDisable()
+    {
+        _inputController.OnAimEvent -= HandleAim;
     }
 
     private void HandleAim(bool isAiming)
     {
         _animationBehaviour.SetAiming(isAiming);
-
         switch (isAiming)
         {
             case true when rangeAttack != null:
                 _attackController.SetAttackStrategy(rangeAttack);
+                _cameraController.canRotate = false;
                 break;
             case false when meleeAttack != null:
                 _attackController.SetAttackStrategy(meleeAttack);
+                _cameraController.canRotate = true;
                 break;
         }
     }
